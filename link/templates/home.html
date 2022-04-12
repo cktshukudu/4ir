@@ -1,0 +1,445 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static "fontawesome/css/all.min.css" %}" />
+    <link rel="stylesheet" href="{% static '/css/main.css' %}">
+    <title>{% block title %} 4IR. {% endblock %}</title>
+  <style>
+    body{
+    background: #f1f1f1;
+    font-family: Lato, Helvetica, Arial, sans-serif;  
+}   
+#navbar {
+background: white;
+color: rgb(13, 26, 38);
+position: fixed;
+top: 0;
+height: 60px;
+line-height: 60px;
+width: 100vw;
+z-index: 10;
+}
+.nav-wrapper {
+margin: auto;
+text-align: center;
+width: 70%;
+}
+
+.logo {
+float: left;
+color: rgb(13, 26, 38);
+margin-left: 28px;
+font-size: 1.5em;
+height: 60px;
+letter-spacing: 1px;
+text-transform: uppercase;
+} 
+
+#navbar ul {
+display: inline-block;
+list-style: none;
+/* margin-right: 14px; */
+margin-top: -2px;
+text-align: right;
+}
+#navbar li {
+display: inline-block;
+}
+
+#navbar li a {
+color: rgb(13, 26, 38);
+display: block;
+font-size: 0.7em;
+height: 50px;
+letter-spacing: 1px;
+margin: 0 20px;
+padding: 0 4px;
+position: relative;
+text-decoration: none;
+text-transform: uppercase;
+}
+#navbar nav-item span {
+position: relative;
+top: 3px;
+}
+.carousel {
+margin-left: 15%;
+margin-right: 15%;
+margin-top: 2%;
+}
+
+ul.slides {
+display: block;
+position: relative;
+height: 600px;
+margin: 0;
+padding: 0;
+overflow: hidden;
+list-style: none;
+}
+
+.slides * {
+user-select: none;
+-ms-user-select: none;
+-moz-user-select: none;
+-khtml-user-select: none;
+-webkit-user-select: none;
+-webkit-touch-callout: none;
+}
+
+ul.slides input {
+display: none; 
+}
+
+
+.slide-container { 
+display: block; 
+}
+
+.slide-image {
+display: block;
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+opacity: 0;
+transition: all .7s ease-in-out;
+}   
+
+.slide-image img {
+width: auto;
+min-width: 100%;
+height: 100%;
+}
+
+.carousel-controls {
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+z-index: 999;
+font-size: 100px;
+line-height: 600px;
+color: #fff;
+}
+
+.carousel-controls label {
+display: none;
+position: absolute;
+padding: 0 20px;
+opacity: 0;
+transition: opacity .2s;
+cursor: pointer;
+}
+
+.slide-image:hover + .carousel-controls label{
+opacity: 0.5;
+}
+
+.carousel-controls label:hover {
+opacity: 1;
+}
+
+.carousel-controls .prev-slide {
+width: 49%;
+text-align: left;
+left: 0;
+}
+
+.carousel-controls .next-slide {
+width: 49%;
+text-align: right;
+right: 0;
+}
+
+.carousel-dots {
+position: absolute;
+left: 0;
+right: 0;
+bottom: 20px;
+z-index: 999;
+text-align: center;
+}
+
+.carousel-dots .carousel-dot {
+display: inline-block;
+width: 30px;
+height: 30px;
+border-radius: 50%;
+background-color: #fff;
+opacity: 0.5;
+margin: 10px;
+}
+
+input:checked + .slide-container .slide-image {
+opacity: 1;
+transform: scale(1);
+transition: opacity 1s ease-in-out;
+}
+
+input:checked + .slide-container .carousel-controls label {
+ display: block; 
+}
+
+input#img-1:checked ~ .carousel-dots label#img-dot-1,
+input#img-2:checked ~ .carousel-dots label#img-dot-2,
+input#img-3:checked ~ .carousel-dots label#img-dot-3,
+input#img-4:checked ~ .carousel-dots label#img-dot-4,
+input#img-5:checked ~ .carousel-dots label#img-dot-5,
+input#img-6:checked ~ .carousel-dots label#img-dot-6 {
+opacity: 1;
+}
+input:checked + .slide-container .nav label { display: block; }
+html {
+height: 100%;
+}
+
+img {
+max-width: 100%;
+height: auto;
+vertical-align: middle;
+}
+span, a {
+display: inline-block;
+color: inherit;
+}
+h1, h2, h3, h4, h5, h6 {
+color: #856f6f;
+font-weight: 600;
+font-family: "Open Sans", sans-serif;
+margin: 0;
+}
+p {
+line-height: 1.6;
+font-weight: 400;
+margin: 0;
+}
+h4 {
+font-size: 16px;
+}
+.section-padding {
+padding: 100px 0px;
+}
+.section-title {
+padding-bottom: 80px;
+}
+.section-title p {
+width: 60%;
+margin: 15px auto 20px;
+}
+.mb-50 {
+margin-bottom: 50px !important;
+}
+.mt-50 {
+margin-top: 50px !important;
+}
+.pd-lt-10 {
+padding-left:10px;
+}
+.no-padding {
+padding: 0px !important;
+}
+.sub-title-paragraph h4 {
+margin-bottom: 5px;
+
+}
+.sub-title-paragraph p {
+padding-top: 20px;
+font-weight: 300;
+font-size: 14px;
+line-height: 25px;
+color: #c0bbbb;
+}
+.container{
+background: #fff;
+border-radius: 2px;
+padding: 50px;
+
+}
+.con{
+border-radius: 2px;
+padding: 50px;
+
+}
+.service-box {
+padding: 50px;
+margin: 20px;
+border: 1px solid #c0bbbb;
+border-radius: 10px;
+-webkit-box-shadow: 0px 5px 35px 0px rgba(148, 146, 245, 0.15);
+box-shadow: 0px 5px 35px 0px rgba(148, 146, 245, 0.15);
+}
+
+.footer-copy {
+background: #fff; 
+  color: #000;
+  font-size: 13px;
+  text-align: center;
+  padding:40px 0px;
+}
+  </style>
+</head>
+<body>
+    {% block body%}
+    <nav id="navbar" class="">
+      <div class="nav-wrapper">
+        <div class="logo">
+          <a href=""><i class="fab fa-500px fa-2x"></i></a>
+        </div>
+        <ul id="menu">
+          <li><a href="#"class="nav-item nav-link active"><i class="fas fa-home"></i><span>Home</span></a></li>
+          <li><a href="#"><i class="fas fa-users"></i> About Us</a></li>
+          <li><a href="#"><i class="fas fa-briefcase"></i> Work</a></li>
+          <li><a href="#"><i class="fas fa-mobile"></i> Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+    <br> <br>
+    <div class="carousel">
+      <ul class="slides">
+        <input type="radio" name="radio-buttons" id="img-1" checked />
+        <li class="slide-container">
+          <div class="slide-image">
+            <img src="{% static 'images/78.jpg' %}">
+          </div>
+          <div class="carousel-controls">
+            <label for="img-3" class="prev-slide">
+              <span>&lsaquo;</span>
+            </label>
+            <label for="img-2" class="next-slide">
+              <span>&rsaquo;</span>
+            </label>
+          </div>
+        </li>
+        <input type="radio" name="radio-buttons" id="img-2" />
+        <li class="slide-container">
+          <div class="slide-image">
+            <img src="{% static 'images/7.jpg' %}">
+          </div>
+          <div class="carousel-controls">
+            <label for="img-1" class="prev-slide">
+              <span>&lsaquo;</span>
+            </label>
+            <label for="img-3" class="next-slide">
+              <span>&rsaquo;</span>
+            </label>
+          </div>
+        </li>
+        <input type="radio" name="radio-buttons" id="img-3" />
+        <li class="slide-container">
+          <div class="slide-image">
+            <img src="{% static 'images/111.jpg' %}">
+          </div>
+          <div class="carousel-controls">
+            <label for="img-2" class="prev-slide">
+              <span>&lsaquo;</span>
+            </label>
+            <label for="img-1" class="next-slide">
+              <span>&rsaquo;</span>
+            </label>
+          </div>
+        </li>
+        <div class="carousel-dots">
+          <label for="img-1" class="carousel-dot" id="img-dot-1"></label>
+          <label for="img-2" class="carousel-dot" id="img-dot-2"></label>
+          <label for="img-3" class="carousel-dot" id="img-dot-3"></label>
+        </div>
+      </ul>
+    </div>
+    <section id="about_section">
+      <div class="about-us section-padding" data-scroll-index='1'>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 section-title text-center">
+                <span class="section-title-line"></span> </div>
+              <div class="col-md-6 mb-50">
+                <div class="section-info">
+                  <div class="sub-title-paragraph">
+                    <h4>About Us</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                        </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-50">
+                <div class="section-img"> <img src="{% static 'images/i.jpg' %}" alt="" class="img-responsive"/> </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="services section-padding bg-grey" data-scroll-index='2'>
+          <div class="con">
+            <div class="row">
+              <div class="col-md-12 section-title text-center">
+                <h3>Our Work</h3>
+                <hr>
+                <span class="section-title-line"></span> </div>
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb-30">
+                <div class="service-box bg-white text-center">
+                  <div class="icon-text">
+                    <h4 class="title-box">@Solutions</h4>
+                    <hr>
+                    <p>Sed malesuada, est eget condimentum iaculis, nisi ex facilisis metus.</p>
+                    
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb-30">
+                <div class="service-box bg-white text-center">
+                  <div class="icon"></div>
+                  <div class="icon-text">
+                    <h4 class="title-box">DIY</h4>
+                    <hr>
+                    <p>Sed malesuada, est eget condimentum iaculis, nisi ex facilisis metus.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12 mb-30">
+                <div class="service-box bg-white text-center">
+                  <div class="icon"></i> </div>
+                  <div class="icon-text">
+                    <h4 class="title-box">TR-Invoicing</h4>
+                    <hr>
+                    <p>Sed malesuada, est eget condimentum iaculis, nisi ex facilisis metus.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb-30">
+                <div class="service-box bg-white text-center">
+                 
+                  <div class="icon-text">
+                    <h4 class="title-box">Order Management</h4>
+                    <hr>
+                    <p>Sed malesuada, est eget condimentum iaculis, nisi ex facilisis metus.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="footer-copy">
+          <div class="container-fluid">
+             <div class="row">
+                 <div class="col item social">
+                     <a href="#"><i class="fab fa-facebook"> Facebook</i></a>
+                     <a href="#"><i class="fab fa-twitter"> Twitter</i></a>
+                     <a href="#"><i class="fab fa-youtube"> Youtube</i></a>
+                     <a href="#"><i class="fab fa-instagram"> Instagram</i></a>
+             </div>
+         <div class="col-md-12">
+         <p>2022 &copy;.</a></p>
+          </div>
+     </div>
+          </div>
+          </footer>
+    {% endblock%}
+</body>
+</html>
